@@ -6,15 +6,18 @@
 #include <windows.h>
 #include <string>
 #include <vector>
+#include <chrono>
+#include <fstream>
 
 class _Equation_Solve
 {
 private:
-
 	/*
 		ZMIENNE PRIVATE
 	*/
-
+	float **Matrix;
+	size_t width;
+	size_t height;
 	//////////////////////////////////////////////////////////////////////////////
 protected:
 	/*
@@ -31,7 +34,8 @@ public:
 	/*
 		FUNKCJE PUBLIC
 	*/
-	
+	void show_matrix(void) const;
+	void Gauss_Jordan_Elimination();
 	//////////////////////////////////////////////////////////////////////////////
 	/*
 		DESTRUKTOR
