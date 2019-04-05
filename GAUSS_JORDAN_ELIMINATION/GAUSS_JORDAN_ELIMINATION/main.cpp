@@ -12,7 +12,7 @@ int main(int argc, char * argv[])
 	Obj.show_matrix();
 	cout << endl;
 	cout << "----------------------------------------------------" << endl;
-	cout    << endl;
+	cout << endl;
 	Obj.Gauss_Jordan_Elimination();
 	system("pause");
 	return EXIT_SUCCESS;
