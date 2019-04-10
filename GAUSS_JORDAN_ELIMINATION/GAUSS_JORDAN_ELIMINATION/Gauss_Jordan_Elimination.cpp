@@ -3,12 +3,16 @@
 using namespace std;
 
 _Equation_Solve::_Equation_Solve():
-	width(3),
-	height(4)
+	width(0),
+	height(0)
 {
 	std::fstream file_in;
 	//file_in.open("matrix2.in", std::ios_base::in);
-	file_in.open("matrix.in", std::ios_base::in);
+	//file_in.open("matrix.in", std::ios_base::in);
+	//file_in.open("matrix4x5.in", std::ios_base::in);
+	file_in.open("matrix5x6.in", std::ios_base::in);
+	file_in >> this->width;
+	file_in >> this->height;
 	Matrix = new float*[width];
 	for (size_t i = 0; i < width; ++i)
 	{
@@ -60,6 +64,7 @@ void _Equation_Solve::show_matrix(void) const
 			else
 			{
 				std::cout << " = " << Matrix[i][j] << ' ';
+				/*std::cout << " Flag on: " << Matrix[i][height] << ' ';*/
 			}
 		}
 		std::cout << endl;
@@ -84,7 +89,7 @@ void _Equation_Solve::Gauss_Jordan_Elimination()
 	{
 		Matrix[0][j] /= divider;
 	}
-
+	
 	size_t i = 1;
 	float substractor = 0;
 	float multiplier = 0;
@@ -92,6 +97,9 @@ void _Equation_Solve::Gauss_Jordan_Elimination()
 	size_t where_one = 0;
 	while (is_triangle_matrix() == false)
 	{
+		/*show_matrix();
+		std::cin.get();*/
+		//std::cin.get();
 		if (Matrix[i][height] >= i)
 		{
 			//tutaj dziel caly badz mnoz przez odwrotnosc przekatnych
@@ -99,22 +107,26 @@ void _Equation_Solve::Gauss_Jordan_Elimination()
 			multiplier = Matrix[i][multiplier_position];
 			for (size_t j = Matrix[i][height]; j < this->height; ++j)
 			{
-				Matrix[i][j] /= (multiplier);
+				this->Matrix[i][j] /= (multiplier);
 			}
 			where_one = multiplier_position;
 		}
 		else
 		{
+			/*show_matrix();
+			std::cout << endl;*/
 			size_t multiplier_position = this->Matrix[i][this->height];
 			multiplier = Matrix[i][multiplier_position];
 			if (multiplier != 0)
 			{
 				for (size_t j = Matrix[i][height]; j < this->height; ++j)
 				{
-					Matrix[i][j] = (Matrix[i][j] - (multiplier * (Matrix[where_one][j])));
+					//std::cout << Matrix[where_one][j] << ' ';
+					this->Matrix[i][j] = (Matrix[i][j] - (multiplier * (Matrix[where_one][j])));
 				}
 				Matrix[i][height] += 1;
 			}
+		//	std::cout << endl;
 		}
 		substractor = 0;
 		multiplier = 0;
@@ -123,7 +135,7 @@ void _Equation_Solve::Gauss_Jordan_Elimination()
 		{
 			i = 1;
 		}
-	}
+	}	
 }
 
 bool _Equation_Solve::is_triangle_matrix() const
@@ -149,14 +161,28 @@ void _Equation_Solve::Show_Solve() const
 	{
 		results[i] = 0;
 	}
-	for (size_t i = width - 1; i >= 0; --i)
+	size_t counter = height - 2;
+	//size_t result_counter = 0;
+	for (__int32 i = width - 1; i >= 0; --i)
 	{
-		for (size_t j = height - 1; j > i; --j)
+		for (size_t j = 0; j < height; ++j)
 		{
-			
+			if (j < height - 1)
+			{
+
+			}
+			else
+			{
+				/*row_equation_result = (Matrix[i][j]);
+				std::cout << row_equation_result << endl;
+				std::cin.get();*/
+			}
 		}
-		//std::cout << row_equation_result << endl;
-		results[i] = row_equation_result;
+	/*	if (counter >= 0)
+		{
+			results[counter] = row_equation_result;
+			--counter;
+		}*/
 	}
 
 	for (size_t i = 0; i < height - 1; ++i)
@@ -175,6 +201,20 @@ _Equation_Solve::~_Equation_Solve()
 	}
 	delete[] Matrix;
 }
+
+
+/*for (size_t k = 0; k < height - 1; ++k)
+		{
+			if (results[k] == 0)
+			{
+				continue;
+			}
+			else
+			{
+				row_equation_result = results[k];
+			}
+		}*/
+
 
 /*
 if (j < height - 1)

@@ -16,6 +16,7 @@ int main(int argc, char * argv[])
 	cout << "----------------------------------------------------" << endl;
 	cout << endl;
 	Obj.Gauss_Jordan_Elimination();
+	Obj.show_matrix();
 	Obj.Show_Solve();
 	//char abc[] = { 0x01, 0x02, 0x03, 0x04 };
 	//unsigned short * ptr = (unsigned short*)(void*)abc;
