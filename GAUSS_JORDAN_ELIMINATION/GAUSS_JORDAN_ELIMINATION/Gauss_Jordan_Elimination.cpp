@@ -8,9 +8,10 @@ _Equation_Solve::_Equation_Solve():
 {
 	std::fstream file_in;
 	//file_in.open("matrix2.in", std::ios_base::in);
-	//file_in.open("matrix.in", std::ios_base::in);
+	file_in.open("matrix.in", std::ios_base::in);
 	//file_in.open("matrix4x5.in", std::ios_base::in);
-	file_in.open("matrix5x6.in", std::ios_base::in);
+	//file_in.open("matrix5x6.in", std::ios_base::in);
+	//file_in.open("matrix_c.in", std::ios_base::in);
 	file_in >> this->width;
 	file_in >> this->height;
 	Matrix = new float*[width];
