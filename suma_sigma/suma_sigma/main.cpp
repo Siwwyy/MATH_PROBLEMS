@@ -18,6 +18,7 @@ const __int64 sigma(__int64 begin_value)
 int main(int argc, char * argv[])
 {
 	std::cout << sigma(98) << '\n';
+	std::cout << sigma(5) << '\n';
 	system("pause");
 	return EXIT_SUCCESS;
 }
