@@ -36,6 +36,8 @@ public:
 	*/
 	void show_matrix(void) const;
 	void Gauss_Jordan_Elimination();
+	bool is_triangle_matrix() const;
+	void Show_Solve() const;
 	//////////////////////////////////////////////////////////////////////////////
 	/*
 		DESTRUKTOR
