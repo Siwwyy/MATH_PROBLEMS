@@ -9,9 +9,9 @@ _Equation_Solve::_Equation_Solve():
 	std::fstream file_in;
 	//file_in.open("matrix2.in", std::ios_base::in);
 	//file_in.open("matrix.in", std::ios_base::in);
-	file_in.open("matrix10x11.in", std::ios_base::in);
+	//file_in.open("matrix10x11.in", std::ios_base::in);
 	//file_in.open("matrix4x5.in", std::ios_base::in);
-	//file_in.open("matrix5x6.in", std::ios_base::in);
+	file_in.open("matrix5x6.in", std::ios_base::in);
 	//file_in.open("matrix_c.in", std::ios_base::in);
 	file_in >> this->width;
 	file_in >> this->height;
@@ -121,14 +121,27 @@ void _Equation_Solve::Gauss_Jordan_Elimination()
 				}
 				Matrix[i][height] += 1;
 			}
+		/*	if (zeros_row(i) == true)
+			{
+				for (size_t j = 0; j < this->height; ++j)
+				{
+					std::swap(Matrix[i][j], Matrix[i + 1][j]);
+				}
+			}*/
+			/*show_matrix();
+			std::cin.get();*/
 		}
 		substractor = 0;
 		multiplier = 0;
 		++i;
+		/*if (zeros_row(width - 1) == true)
+		{
+			break;
+		}*/
 		if (i == width)
 		{
 			i = 1;
-		}
+		}	
 	}	
 }
 
@@ -143,6 +156,22 @@ bool _Equation_Solve::is_triangle_matrix() const
 				return false;
 			}
 		}
+	}
+	return true;
+}
+
+bool _Equation_Solve::zeros_row(const size_t row) const
+{
+	for (size_t i = row; i <= row; ++i)
+	{
+		for (size_t j = 0; j < height; ++j)
+		{
+			if (Matrix[i][j] != 0)
+			{
+				return false;
+			}
+		}
+		return true;
 	}
 	return true;
 }

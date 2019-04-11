@@ -37,6 +37,7 @@ public:
 	void show_matrix(void) const;
 	void Gauss_Jordan_Elimination();
 	bool is_triangle_matrix() const;
+	bool zeros_row(const size_t row) const;
 	void Show_Solve() const;
 	//////////////////////////////////////////////////////////////////////////////
 	/*
