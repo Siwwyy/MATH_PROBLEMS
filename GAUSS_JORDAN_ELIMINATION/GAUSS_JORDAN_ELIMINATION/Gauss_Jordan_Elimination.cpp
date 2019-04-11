@@ -10,8 +10,9 @@ _Equation_Solve::_Equation_Solve():
 	//file_in.open("matrix2.in", std::ios_base::in);
 	//file_in.open("matrix.in", std::ios_base::in);
 	//file_in.open("matrix10x11.in", std::ios_base::in);
+	file_in.open("matrix20x21.in", std::ios_base::in);
 	//file_in.open("matrix4x5.in", std::ios_base::in);
-	file_in.open("matrix5x6.in", std::ios_base::in);
+	//file_in.open("matrix5x6.in", std::ios_base::in);
 	//file_in.open("matrix_c.in", std::ios_base::in);
 	file_in >> this->width;
 	file_in >> this->height;
@@ -48,24 +49,24 @@ void _Equation_Solve::show_matrix(void) const
 			if (j < height - 1)
 			{
 				if (j > 0)
-				{
+				{//setprecision for precision result, if u want change it to bigger number, for example std::setprecision(10), u will se 10 numbers after the ,
 					if (Matrix[i][j] >= 0)
 					{
-						std::cout << " + " << Matrix[i][j] << "x" << j;
+						std::cout << " + " << std::setprecision(2) << Matrix[i][j] << "x" << j;
 					}
 					else
 					{
-						std::cout << ' ' << Matrix[i][j] << "x" << j;
+						std::cout << ' ' << std::setprecision(2) << Matrix[i][j] << "x" << j;
 					}
 				}
 				else
 				{
-					std::cout << ' ' << Matrix[i][j] << "x";
+					std::cout << ' ' << std::setprecision(2) << Matrix[i][j] << "x";
 				}
 			}
 			else
 			{
-				std::cout << " = " << Matrix[i][j] << ' ';
+				std::cout << " = " << std::setprecision(2) << Matrix[i][j] << ' ';
 			}
 		}
 		std::cout << endl;

@@ -8,6 +8,7 @@
 #include <vector>
 #include <chrono>
 #include <fstream>
+#include <iomanip>
 
 class _Equation_Solve
 {

@@ -26,8 +26,8 @@ void matrix_generator(const size_t width, const size_t height)
 int main(int argc, char * argv[])
 {
 	//setlocale(LC_ALL, "");
-	//matrix_generator(10, 11);
-	//std::cin.get();
+	/*matrix_generator(20, 21);
+	std::cin.get();*/
 	_Equation_Solve Obj;	//basic matrix
 	cout << "----------------------------------------------------" << endl;
 	Obj.show_matrix();
