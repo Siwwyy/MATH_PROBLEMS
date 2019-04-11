@@ -8,7 +8,8 @@ _Equation_Solve::_Equation_Solve():
 {
 	std::fstream file_in;
 	//file_in.open("matrix2.in", std::ios_base::in);
-	file_in.open("matrix.in", std::ios_base::in);
+	//file_in.open("matrix.in", std::ios_base::in);
+	file_in.open("matrix10x11.in", std::ios_base::in);
 	//file_in.open("matrix4x5.in", std::ios_base::in);
 	//file_in.open("matrix5x6.in", std::ios_base::in);
 	//file_in.open("matrix_c.in", std::ios_base::in);
@@ -65,7 +66,6 @@ void _Equation_Solve::show_matrix(void) const
 			else
 			{
 				std::cout << " = " << Matrix[i][j] << ' ';
-				/*std::cout << " Flag on: " << Matrix[i][height] << ' ';*/
 			}
 		}
 		std::cout << endl;
@@ -98,12 +98,9 @@ void _Equation_Solve::Gauss_Jordan_Elimination()
 	size_t where_one = 0;
 	while (is_triangle_matrix() == false)
 	{
-		/*show_matrix();
-		std::cin.get();*/
-		//std::cin.get();
 		if (Matrix[i][height] >= i)
 		{
-			//tutaj dziel caly badz mnoz przez odwrotnosc przekatnych
+			//here multiply or divide the row by reverse value
 			size_t multiplier_position = this->Matrix[i][this->height];
 			multiplier = Matrix[i][multiplier_position];
 			for (size_t j = Matrix[i][height]; j < this->height; ++j)
@@ -114,20 +111,16 @@ void _Equation_Solve::Gauss_Jordan_Elimination()
 		}
 		else
 		{
-			/*show_matrix();
-			std::cout << endl;*/
 			size_t multiplier_position = this->Matrix[i][this->height];
 			multiplier = Matrix[i][multiplier_position];
 			if (multiplier != 0)
 			{
 				for (size_t j = Matrix[i][height]; j < this->height; ++j)
 				{
-					//std::cout << Matrix[where_one][j] << ' ';
 					this->Matrix[i][j] = (Matrix[i][j] - (multiplier * (Matrix[where_one][j])));
 				}
 				Matrix[i][height] += 1;
 			}
-		//	std::cout << endl;
 		}
 		substractor = 0;
 		multiplier = 0;
@@ -162,35 +155,39 @@ void _Equation_Solve::Show_Solve() const
 	{
 		results[i] = 0;
 	}
-	size_t counter = height - 2;
-	//size_t result_counter = 0;
+	__int32 counter = height - 2;
 	for (__int32 i = width - 1; i >= 0; --i)
 	{
-		for (size_t j = 0; j < height; ++j)
+		if (Matrix[i][i] == 1)
 		{
-			if (j < height - 1)
+			float substract_result = 0;
+			if (counter == height - 2)
 			{
-
+				results[counter] = Matrix[i][height - 1];
 			}
 			else
 			{
-				/*row_equation_result = (Matrix[i][j]);
-				std::cout << row_equation_result << endl;
-				std::cin.get();*/
+				for (__int32 j = height - 2; j >= counter; --j)
+				{
+					substract_result += (Matrix[i][j]*results[j]);
+				}
+				row_equation_result = (Matrix[i][height - 1] + (-1*substract_result));
+				results[counter] = row_equation_result;
 			}
-		}
-	/*	if (counter >= 0)
-		{
-			results[counter] = row_equation_result;
 			--counter;
-		}*/
+			row_equation_result = 0;
+		}
 	}
 
+	std::cout << "----------------------------" << '\n';
+	std::cout << "RESULTS:" << '\n';
+	std::cout << "| ";
 	for (size_t i = 0; i < height - 1; ++i)
 	{
-		std::cout << results[i] << ' ';
+		std::cout << 'x' << i << " = " << results[i] << " | ";
 	}
 	std::cout << '\n';
+	std::cout << "----------------------------" << '\n';
 	delete[] results;
 }
 
@@ -202,74 +199,3 @@ _Equation_Solve::~_Equation_Solve()
 	}
 	delete[] Matrix;
 }
-
-
-/*for (size_t k = 0; k < height - 1; ++k)
-		{
-			if (results[k] == 0)
-			{
-				continue;
-			}
-			else
-			{
-				row_equation_result = results[k];
-			}
-		}*/
-
-
-/*
-if (j < height - 1)
-			{
-				for (size_t k = 0; k < height - 1; ++k)
-				{
-					if (results[k] == 0)
-					{
-						continue;
-					}
-					else
-					{
-						row_equation_result = Matrix[i][j];
-					}
-				}
-				//row_equation_result = Matrix[i][j];
-			}
-			else
-			{
-
-			}
-*/
-
-//do
-//{
-//	if (Matrix[i][height] >= i)
-//	{
-//		//continue;//poki co continue, tutaj dziel caly badz mnzo przez odwrotnosc przekatnych
-//		size_t multiplier_position = this->Matrix[i][this->height];
-//		multiplier = Matrix[i][multiplier_position];
-//		for (size_t j = Matrix[i][height]; j < this->height; ++j)
-//		{
-//			Matrix[i][j] /= (multiplier);
-//		}
-//		where_one = multiplier_position;
-//	}
-//	else
-//	{
-//		size_t multiplier_position = this->Matrix[i][this->height];
-//		multiplier = Matrix[i][multiplier_position];
-//		if (multiplier != 0)
-//		{
-//			for (size_t j = Matrix[i][height]; j < this->height; ++j)
-//			{
-//				Matrix[i][j] = (Matrix[i][j] - (multiplier * (Matrix[where_one][j])));
-//			}
-//			Matrix[i][height] += 1;
-//		}
-//	}
-//	substractor = 0;
-//	multiplier = 0;
-//	++i;
-//	if (i == width)
-//	{
-//		i = 1;
-//	}
-//} while (is_triangle_matrix() == false);
