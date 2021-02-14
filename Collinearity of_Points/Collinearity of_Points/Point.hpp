@@ -19,7 +19,7 @@ namespace Point
 	{
 	public:
 		Point() = delete;
-		Point(const Point& Object) = delete;
+		Point(const Point& Object) = default;
 		Point& operator=(const Point& Object) = delete;
 
 		~Point() = default;
@@ -31,20 +31,60 @@ namespace Point
 		Point& operator=(Point&& Object) noexcept;
 
 		bool operator==(const Point& rhs) const noexcept;
-		[[nodiscard]] const T& operator[](const std::size_t& index) const noexcept;
+		//[[nodiscard]] decltype(auto) operator[](const std::size_t& index) const;
+		[[nodiscard]] T& operator[](const std::size_t index);
+		[[nodiscard]] const T& operator[](const std::size_t index) const;
 
+		friend std::ostream& operator<<(std::ostream& lhs, const Point& rhs)
+		{
+			auto distance = [&](const T& elem)
+			{
+				const std::size_t diff = (&elem - rhs.Coordinates._Unchecked_begin());
+				return diff;
+			};
+			
+			lhs << "[ ";
+			for (const auto& elem : rhs.Coordinates)
+			{
+				if(distance(elem) != (rhs.Coordinates.size() - 1))
+				{
+					lhs << elem << " , ";
+				}
+				else
+				{
+					lhs << elem;
+				}
+			}
+			lhs << " ]\n";
+			return lhs;
+		}
 
 	private:
 		std::array<T, nDim> Coordinates;
 	};
 
 	template <typename T, std::size_t nDim, typename T0>
+	std::ostream& operator<<(std::ostream& lhs, const Point<T, nDim>& rhs)
+	{
+		lhs << "[ ";
+		for (const auto& elem : rhs.Coordinates)
+		{
+			lhs << elem << " , ";
+		}
+		lhs << " ]\n";
+		return lhs;
+	}
+
+	template <typename T, std::size_t nDim, typename T0>
 	template <typename ... Elems>
 	Point<T, nDim, T0>::Point(Elems&&... elems) :
-		Coordinates{ {std::forward<Elems>(elems)...} }
+		Coordinates{ std::forward<Elems>(elems)... }
 	{
 		constexpr std::size_t elems_amount = sizeof...(Elems);
 		static_assert((nDim == elems_amount), "Number of elements in constructor have to be equal to dimension of this point e.g 2D Point should has {1,2} etc.");
+		//static_assert(std::is_same<T, Elems>::value, "If the point is a float, then in constructor, you have to put point as e.g {1.f,3.f}");
+		//static_assert(std::is_same_v<T, Elems>, "If the point is a float, then in constructor, you have to put point as e.g {1.f,3.f}");
+		//static_assert(std::is_same<T, decltype(elems)...>, "If the point is a float, then in constructor, you have to put point as e.g {1.f,3.f}");
 	}
 
 	template <typename T, std::size_t nDim, typename T0>
@@ -59,7 +99,6 @@ namespace Point
 	{
 		if (this != &Object)
 		{
-			//Coordinates = std::exchange(Object.Coordinates, std::fill_n(Object.Coordinates, nDim, {}));
 			Coordinates = std::move(Object.Coordinates);
 		}
 		return *this;
@@ -75,16 +114,60 @@ namespace Point
 		return false;
 	}
 
+	/*
+	* @param Index must be between 0 and Point dimension - 1 e.g. 2D Point -> Indexes 0 and 1, 3D Point -> Indexes 0, 1, 2 and so forth
+	*/
 	template <typename T, std::size_t nDim, typename T0>
-	const T& Point<T, nDim, T0>::operator[](const std::size_t& index) const noexcept
+	T& Point<T, nDim, T0>::operator[](const std::size_t index)
 	{
-		//static_assert(!(index >= 0 && index < nDim), "Index must be between 0 and Point dimension - 1 e.g. 2D Point -> Indexes 0 and 1, 3D Point -> Indexes 0, 1, 2 and so forth");
-		if (index >= 0 && index < nDim)
-		{
-			return Coordinates[index];
-		}
-		return Coordinates[0];
+		return Coordinates.at(index);
 	}
+
+	/*
+	* @param Index must be between 0 and Point dimension - 1 e.g. 2D Point -> Indexes 0 and 1, 3D Point -> Indexes 0, 1, 2 and so forth
+	*/
+	template <typename T, std::size_t nDim, typename T0>
+	const T& Point<T, nDim, T0>::operator[](const std::size_t index) const
+	{
+		//		//return Coordinates.at(index);
+		//#if _CONTAINER_DEBUG_LEVEL > 0
+		//		_STL_VERIFY((index < Coordinates.size()), "array subscript out of range");
+		//#endif // _CONTAINER_DEBUG_LEVEL > 0
+		//		std::cout << Coordinates.size() << '\n';
+
+		return Coordinates.at(index);
+	}
+
+	//template <typename T, std::size_t nDim, typename T0>
+	//decltype(auto) Point<T, nDim, T0>::operator[](const std::size_t& index) const
+	//{
+	//	return Coordinates.at(index);
+	//}
+
+	//template <typename T, std::size_t nDim, typename T0>
+	//decltype(auto) Point<T, nDim, T0>::operator[](const std::size_t& index) const
+	//{
+
+	//	return *this;
+	//}
+
+	/*
+	* @param Index must be between 0 and Point dimension - 1 e.g. 2D Point -> Indexes 0 and 1, 3D Point -> Indexes 0, 1, 2 and so forth
+	*/
+	//template <typename T, std::size_t nDim, typename T0>
+	//T& Point<T, nDim, T0>::operator[](const std::size_t& index) const
+	//{
+	//	//static_assert(!(index >= 0 && index < nDim), "Index must be between 0 and Point dimension - 1 e.g. 2D Point -> Indexes 0 and 1, 3D Point -> Indexes 0, 1, 2 and so forth");
+	//	//if (index >= 0 && index < nDim)
+	//	//{
+	//	//	return Coordinates[index];
+	//	//}
+	//	//return Coordinates[0];
+
+	//	return Coordinates.at(index);
+	//}
+
+	
 }
 
 #endif /* _POINT_H_INCLUDED_ */

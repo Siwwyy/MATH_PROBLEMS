@@ -142,12 +142,10 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Point.cpp" />
-    <ClCompile Include="Point_2D.cpp" />
     <ClCompile Include="Points_Collinearity_2D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Point.hpp" />
-    <ClInclude Include="Point_2D.hpp" />
     <ClInclude Include="Points_Collinearity_2D.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
