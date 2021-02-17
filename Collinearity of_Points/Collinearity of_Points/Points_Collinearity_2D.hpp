@@ -29,7 +29,8 @@ namespace Math_Problems
 	{
 	public:
 
-		using const_iter = typename std::vector<Point::Point<T, 2>>::const_iterator;
+		using value_type = Points::Point<T, 2>;
+		using const_iter = typename std::vector<value_type>::const_iterator;
 
 		Points_Collinearity_2D() = delete;
 		~Points_Collinearity_2D() = default;
@@ -39,9 +40,7 @@ namespace Math_Problems
 		Points_Collinearity_2D& operator=(const Points_Collinearity_2D& Object) = default;
 		Points_Collinearity_2D& operator=(Points_Collinearity_2D&& Object) noexcept = default;
 
-		Points_Collinearity_2D(const std::initializer_list<Point::Point<T, 2>>& Elems);
-		//Points_Collinearity_2D(const std::vector<Point::Point<T, 2>>& Elems);
-		//Points_Collinearity_2D(const std::initializer_list<T>& Elems);
+		Points_Collinearity_2D(const std::initializer_list<value_type>& Elems);
 
 		inline void show_collinear_points() const;
 
@@ -50,13 +49,11 @@ namespace Math_Problems
 		inline bool is_collinear(const_iter& iter) const noexcept;
 
 	private:
-		std::vector<Point::Point<T, 2>> Points;
+		std::vector<value_type> Points;
 	};
 
 	template <typename T>
-	Points_Collinearity_2D<T>::Points_Collinearity_2D(const std::initializer_list<Point::Point<T, 2>>& Elems) :
-		//Points_Collinearity_2D<T>::Points_Collinearity_2D(const std::vector<Point::Point<T, 2>>& Elems) :
-		//Points_Collinearity_2D<T>::Points_Collinearity_2D(const std::initializer_list<T>& Elems) :
+	Points_Collinearity_2D<T>::Points_Collinearity_2D(const std::initializer_list<value_type>& Elems) :
 		Points(Elems)
 	{
 
@@ -80,8 +77,6 @@ namespace Math_Problems
 		{
 			if (is_collinear(current_point) == true)
 			{
-				////std::cout << *elem;
-				//std::cout << typeid(*current_point).name() << '\n';
 				std::cout << *current_point;
 			}
 		}
@@ -96,51 +91,23 @@ namespace Math_Problems
 	template <typename T>
 	inline bool Points_Collinearity_2D<T>::is_collinear(const_iter& iter) const noexcept
 	{
-		//for (const_iter current_point = Points.begin(); current_point != Points.end(); ++current_point)
-		//{
-		//	for (const_iter next_point = Points.begin(); next_point != Points.end() - 1; ++next_point)
-		//	{
-		//		if ((current_point == next_point) || (current_point == next_point + 1))
-		//		{
-		//			continue;
-		//		}
-		//		else
-		//		{
-		//			/*
-		//			 formula:
-		//			  M = (y2 - y1) / (x2 - x1)
-		//			*/
-		//			const auto M_ab = (next_point->operator[](1) - current_point->operator[](1)) / (next_point->operator[](0) - current_point->operator[](0));
-		//			const auto M_ac = ((next_point + 1)->operator[](1) - current_point->operator[](1)) / ((next_point + 1)->operator[](0) - current_point->operator[](0));
 
-		//			if (M_ab == M_ac)
-		//			{
-		//				return true;
-		//			}
-		//		}
-		//	}
+		///*
+		//	 formula:
+		//	  M = (y2 - y1) / (x2 - x1)
+		//	*/
+		//const auto M_ab = (next_point->operator[](1) - iter->operator[](1)) / (next_point->operator[](0) - iter->operator[](0));
+		//const auto M_ac = ((next_point + 1)->operator[](1) - iter->operator[](1)) / ((next_point + 1)->operator[](0) - iter->operator[](0));
+		//auto& M_ac1 = next_point[1];
+
+		//if (M_ab == M_ac)
+		//{
+		//	return true;
 		//}
 
-		for (const_iter next_point = Points.begin(); next_point != Points.end() - 1; ++next_point)
+		for (const_iter next_point = iter + 1; next_point < Points.end() - 1; ++next_point)
 		{
-			if ((iter == next_point) || (iter == next_point + 1))
-			{
-				continue;
-			}
-			else
-			{
-				/*
-				 formula:
-				  M = (y2 - y1) / (x2 - x1)
-				*/
-				const auto M_ab = (next_point->operator[](1) - iter->operator[](1)) / (next_point->operator[](0) - iter->operator[](0));
-				const auto M_ac = ((next_point + 1)->operator[](1) - iter->operator[](1)) / ((next_point + 1)->operator[](0) - iter->operator[](0));
-
-				if (M_ab == M_ac)
-				{
-					return true;
-				}
-			}
+			
 		}
 
 		return false;

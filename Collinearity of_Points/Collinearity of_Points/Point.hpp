@@ -9,7 +9,7 @@
 
 //#define _STL_COMPILER_PREPROCESSOR
 
-namespace Point
+namespace Points
 {
 	//template<class T>
 	//concept Arthmetic_Type = std::is_arithmetic_v<T>;
@@ -35,45 +35,39 @@ namespace Point
 		[[nodiscard]] T& operator[](const std::size_t index);
 		[[nodiscard]] const T& operator[](const std::size_t index) const;
 
-		friend std::ostream& operator<<(std::ostream& lhs, const Point& rhs)
-		{
-			auto distance = [&](const T& elem)
-			{
-				const std::size_t diff = (&elem - rhs.Coordinates._Unchecked_begin());
-				return diff;
-			};
-			
-			lhs << "[ ";
-			for (const auto& elem : rhs.Coordinates)
-			{
-				if(distance(elem) != (rhs.Coordinates.size() - 1))
-				{
-					lhs << elem << " , ";
-				}
-				else
-				{
-					lhs << elem;
-				}
-			}
-			lhs << " ]\n";
-			return lhs;
-		}
+		template <typename T, std::size_t nDim, typename T0>
+		friend std::ostream& operator<<(std::ostream& lhs, const Point<T, nDim, T0>& rhs);
+
 
 	private:
 		std::array<T, nDim> Coordinates;
 	};
 
 	template <typename T, std::size_t nDim, typename T0>
-	std::ostream& operator<<(std::ostream& lhs, const Point<T, nDim>& rhs)
+	inline std::ostream& operator<<(std::ostream& lhs, const Point<T, nDim, T0>& rhs)
 	{
+		auto distance = [&](const T& elem)
+		{
+			const std::size_t diff = (&elem - rhs.Coordinates._Unchecked_begin());
+			return diff;
+		};
+
 		lhs << "[ ";
 		for (const auto& elem : rhs.Coordinates)
 		{
-			lhs << elem << " , ";
+			if (distance(elem) != (rhs.Coordinates.size() - 1))
+			{
+				lhs << elem << " , ";
+			}
+			else
+			{
+				lhs << elem;
+			}
 		}
 		lhs << " ]\n";
 		return lhs;
 	}
+
 
 	template <typename T, std::size_t nDim, typename T0>
 	template <typename ... Elems>
@@ -167,7 +161,7 @@ namespace Point
 	//	return Coordinates.at(index);
 	//}
 
-	
+
 }
 
 #endif /* _POINT_H_INCLUDED_ */
