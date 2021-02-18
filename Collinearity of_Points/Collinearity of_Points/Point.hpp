@@ -38,8 +38,6 @@ namespace Points
 		[[nodiscard]] inline decltype(auto) Get_X() const noexcept;
 		[[nodiscard]] inline decltype(auto) Get_Y() const noexcept;
 
-
-
 		template <typename T, std::size_t nDim, typename T0>
 		friend std::ostream& operator<<(std::ostream& lhs, const Point<T, nDim, T0>& rhs);
 

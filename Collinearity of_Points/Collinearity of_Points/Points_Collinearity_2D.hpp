@@ -42,6 +42,9 @@ namespace Math_Problems
 
 		Points_Collinearity_2D(const std::initializer_list<value_type>& Elems);
 
+		//template<typename ... Elems>
+		//explicit Points_Collinearity_2D(Elems && ... elems);
+
 		void show_collinear_points() const;
 
 	private:
@@ -59,6 +62,14 @@ namespace Math_Problems
 
 	}
 
+	//template <typename T>
+	//template <typename ... Elems>
+	//Points_Collinearity_2D<T>::Points_Collinearity_2D(Elems&&... elems) :
+	//	Points{ std::forward<Elems>(elems)... }
+	//{
+
+	//}
+
 	template <typename T>
 	inline void Points_Collinearity_2D<T>::show_collinear_points() const
 	{
@@ -67,7 +78,7 @@ namespace Math_Problems
 			std::cout << "Two points or one point always collinear!\n";
 			return;
 		}
-		
+
 		collinear_points_algorithm();
 	}
 
@@ -98,28 +109,30 @@ namespace Math_Problems
 		for (const_iter First_Point = Points.begin(); First_Point != Points.end(); ++First_Point)
 		{
 			const std::size_t index = std::distance(std::begin(Points), First_Point);
-			if (!collinearity_state[index])
+			if (collinearity_state[index])
 			{
-				bool collinear_state = false;
-				for (const_iter Second_Point = First_Point + 1; Second_Point < Points.end(); ++Second_Point)
-				{
-					for (const_iter Third_Point = Second_Point + 1; Third_Point < Points.end(); ++Third_Point)
-					{
-						if (are_collinear(First_Point, Second_Point, Third_Point))
-						{
-							collinearity_state[index] = true;
-							collinearity_state[std::distance(std::begin(Points), Second_Point)] = true;
-							collinearity_state[std::distance(std::begin(Points), Third_Point)] = true;
+				continue;
+			}
 
-							std::cout << "Collinear points: " << *First_Point << ' ' << *Second_Point << ' ' << *Third_Point << '\n';
-							collinear_state = true;
-							break;
-						}
-					}
-					if (collinear_state)
+			bool collinear_state = false;
+			for (const_iter Second_Point = First_Point + 1; Second_Point < Points.end(); ++Second_Point)
+			{
+				for (const_iter Third_Point = Second_Point + 1; Third_Point < Points.end(); ++Third_Point)
+				{
+					if (are_collinear(First_Point, Second_Point, Third_Point))
 					{
+						collinearity_state[index] = true;
+						collinearity_state[std::distance(std::begin(Points), Second_Point)] = true;
+						collinearity_state[std::distance(std::begin(Points), Third_Point)] = true;
+
+						std::cout << "Collinear points: " << *First_Point << ' ' << *Second_Point << ' ' << *Third_Point << '\n';
+						collinear_state = true;
 						break;
 					}
+				}
+				if (collinear_state)
+				{
+					break;
 				}
 			}
 		}
