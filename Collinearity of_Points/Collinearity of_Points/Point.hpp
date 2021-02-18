@@ -35,9 +35,13 @@ namespace Points
 		[[nodiscard]] T& operator[](const std::size_t index);
 		[[nodiscard]] const T& operator[](const std::size_t index) const;
 
+		[[nodiscard]] inline decltype(auto) Get_X() const noexcept;
+		[[nodiscard]] inline decltype(auto) Get_Y() const noexcept;
+
+
+
 		template <typename T, std::size_t nDim, typename T0>
 		friend std::ostream& operator<<(std::ostream& lhs, const Point<T, nDim, T0>& rhs);
-
 
 	private:
 		std::array<T, nDim> Coordinates;
@@ -64,7 +68,7 @@ namespace Points
 				lhs << elem;
 			}
 		}
-		lhs << " ]\n";
+		lhs << " ]";
 		return lhs;
 	}
 
@@ -130,6 +134,18 @@ namespace Points
 		//		std::cout << Coordinates.size() << '\n';
 
 		return Coordinates.at(index);
+	}
+
+	template <typename T, std::size_t nDim, typename T0>
+	decltype(auto) Point<T, nDim, T0>::Get_X() const noexcept
+	{
+		return Coordinates[0];
+	}
+
+	template <typename T, std::size_t nDim, typename T0>
+	decltype(auto) Point<T, nDim, T0>::Get_Y() const noexcept
+	{
+		return Coordinates[1];
 	}
 
 	//template <typename T, std::size_t nDim, typename T0>
