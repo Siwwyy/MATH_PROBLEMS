@@ -8,9 +8,14 @@ int main(int argc, char* argv[])
 {
 	////////////////////////////////////////////////////////////////////////////
 
-	//const Math_Problems::Points_Collinearity_2D<int> Obj( {2,2}, {4,4}, {-6,-1}, {-16,-5}, {6,6} );
-	const Math_Problems::Points_Collinearity_2D<int> Obj{ Points::Point<int, 2>{2,2}, Points::Point<int, 2>{4,4}, Points::Point<int, 2>{-6,-1}, Points::Point<int, 2>{-16,-5}, Points::Point<int, 2>{6,6} };
+	const Math_Problems::Points_Collinearity_2D<int> Obj{ {2,2}, {4,4}, {-6,-1}, {-16,-5}, {6,6} };
+	//const Math_Problems::Points_Collinearity_2D<int> Obj{ Points::Point<int, 2>{2,2}, Points::Point<int, 2>{4,4}, Points::Point<int, 2>{-6,-1}, Points::Point<int, 2>{-16,-5}, Points::Point<int, 2>{6,6} };
 	//const Math_Problems::Points_Collinearity_2D<int> Obj{ Points::Point<int, 2>{2,2}, Points::Point<int, 2>{4,4}, };
+
+	//Points::Point<int, 2> cos{ 1,2 };
+	//std::vector<Points::Point<int, 2>> a{ {1,2}, {3,4} };
+
+
 
 	Obj.show_collinear_points();
 

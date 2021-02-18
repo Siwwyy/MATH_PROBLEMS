@@ -56,7 +56,8 @@ namespace Math_Problems
 	};
 
 	template <typename T>
-	Points_Collinearity_2D<T>::Points_Collinearity_2D(const std::initializer_list<value_type>& Elems) :
+	Points_Collinearity_2D<T>::Points_Collinearity_2D(const std::initializer_list<value_type>& Elems)
+		:
 		Points(Elems)
 	{
 

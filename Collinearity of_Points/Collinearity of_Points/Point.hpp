@@ -24,8 +24,11 @@ namespace Points
 
 		~Point() = default;
 
-		template<typename ... Elems>
-		explicit Point(Elems && ... elems);
+		//template<typename ... Elems>
+		//explicit Point(Elems && ... elems);
+
+		template<typename U>
+		Point(const T x, const U y);
 
 		Point(Point&& Object) noexcept;
 		Point& operator=(Point&& Object) noexcept;
@@ -71,20 +74,38 @@ namespace Points
 	}
 
 
+	//template <typename T, std::size_t nDim, typename T0>
+	//template <typename ... Elems>
+	//Point<T, nDim, T0>::Point(Elems&&... elems) :
+	//	Coordinates{ std::forward<Elems>(elems)... }
+	//{
+	//	constexpr std::size_t elems_amount = sizeof...(Elems);
+	//	static_assert((nDim == elems_amount), "Number of elements in constructor have to be equal to dimension of this point e.g 2D Point should has {1,2} etc.");
+	//	//static_assert(std::is_same<T, Elems>::value, "If the point is a float, then in constructor, you have to put point as e.g {1.f,3.f}");
+	//	//static_assert(std::is_same_v<T, Elems>, "If the point is a float, then in constructor, you have to put point as e.g {1.f,3.f}");
+	//	//static_assert(std::is_same<T, decltype(elems)...>, "If the point is a float, then in constructor, you have to put point as e.g {1.f,3.f}");
+	//}
+
+	//template <typename T, std::size_t nDim, typename T0>
+	//Point<T, nDim, T0>::Point(const T x, const T y) :
+	//	Coordinates{ x,y }
+	//{
+	//	//static_assert((nDim == elems_amount), "Number of elements in constructor have to be equal to dimension of this point e.g 2D Point should has {1,2} etc.");
+	//	//static_assert(std::is_same_v<decltype(x), decltype(y)>, "If the point is a float, then in constructor, you have to put point as e.g {1.f,3.f}");
+	//}
+
 	template <typename T, std::size_t nDim, typename T0>
-	template <typename ... Elems>
-	Point<T, nDim, T0>::Point(Elems&&... elems) :
-		Coordinates{ std::forward<Elems>(elems)... }
+	template <typename U>
+	Point<T, nDim, T0>::Point(const T x, const U y)
+		:
+		Coordinates{ x,y }
 	{
-		constexpr std::size_t elems_amount = sizeof...(Elems);
-		static_assert((nDim == elems_amount), "Number of elements in constructor have to be equal to dimension of this point e.g 2D Point should has {1,2} etc.");
-		//static_assert(std::is_same<T, Elems>::value, "If the point is a float, then in constructor, you have to put point as e.g {1.f,3.f}");
-		//static_assert(std::is_same_v<T, Elems>, "If the point is a float, then in constructor, you have to put point as e.g {1.f,3.f}");
-		//static_assert(std::is_same<T, decltype(elems)...>, "If the point is a float, then in constructor, you have to put point as e.g {1.f,3.f}");
+		static_assert(std::is_same_v<T, U>, "Point's coordinates have to have the same type e.g if the point is a float then {1.f, 2.f} etc.");
 	}
 
 	template <typename T, std::size_t nDim, typename T0>
-	Point<T, nDim, T0>::Point(Point&& Object) noexcept :
+	Point<T, nDim, T0>::Point(Point&& Object) noexcept
+		:
 		Coordinates(std::move(Object.Coordinates))
 	{
 
